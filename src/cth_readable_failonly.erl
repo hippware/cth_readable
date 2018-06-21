@@ -279,8 +279,10 @@ maybe_steal_logger_config() ->
             case logger:get_handler_config(default) of
                 {ok, {_,Cfg}} -> %% OTP-21.0-rc2 result
                     maps:with([formatter], Cfg); % only keep the essential
-                 {ok, Cfg} -> %% OTP-21.0 result
-                    maps:with([formatter], Cfg) % only keep the essential
+                {ok, Cfg} -> %% OTP-21.0 result
+                    maps:with([formatter], Cfg); % only keep the essential
+                {error, {not_found, default}} ->
+                    #{}
             end
     end.
 
